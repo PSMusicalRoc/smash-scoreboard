@@ -276,7 +276,8 @@ class BaseOptionsMenu(glooey.Stack):
       custom_vert_padding = 4
 
       def on_click(self, w):
-        raise NotImplementedError()
+        Globals.dialog.close()
+        Globals.dialog = None
 
 ############### SELECTWIDGETDIALOG BUTTONS #################
 
