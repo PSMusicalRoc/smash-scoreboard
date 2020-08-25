@@ -99,6 +99,7 @@ class AddButton(BaseButton):
       Globals.dialog = pyglet.window.Window(height=300, width=300,
                                     caption="Select Widget for Cell " + str(self.x+1) +", " + str(self.y+1),
                                     style=pyglet.window.Window.WINDOW_STYLE_DIALOG)
+      Globals.dialog.set_icon(pyglet.resource.image('icon16.png'), pyglet.resource.image('icon32.png'))
       dialog_gui_batch = pyglet.graphics.Batch()
       dialog_gui = glooey.Gui(Globals.dialog, batch=dialog_gui_batch)
 
@@ -176,6 +177,7 @@ class OptionsButton(BaseButton):
       Globals.dialog = pyglet.window.Window(height=300, width=300,
                                             caption="Options for " + parent.name,
                                             style=pyglet.window.Window.WINDOW_STYLE_DIALOG)
+      Globals.dialog.set_icon(pyglet.resource.image('icon16.png'), pyglet.resource.image('icon32.png'))
       new_gui_batch = pyglet.graphics.Batch()
       new_gui = glooey.Gui(Globals.dialog, batch=new_gui_batch)
 
@@ -714,7 +716,7 @@ class ButtonScrollbox(ScrollBox):
 
     self.position = position
 
-    self.grid = Grid(6, 2)
+    self.grid = Grid(num_cols=2)
 
     self.button_list = [PlayerNameInputButton(self.position),
                         StockInputTextButton(self.position),

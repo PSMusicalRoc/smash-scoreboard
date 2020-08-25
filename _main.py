@@ -8,6 +8,7 @@ gui_batch = pyglet.graphics.Batch()
 
 window = pyglet.window.Window(1920, 1080,
                               caption="Smash Scoreboard 4.0")
+window.set_icon(pyglet.resource.image('icon16.png'), pyglet.resource.image('icon32.png'))
 gui = glooey.Gui(window, batch=gui_batch)
 
 grid = Grid(4, 3)
