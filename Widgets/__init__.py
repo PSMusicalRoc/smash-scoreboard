@@ -1,7 +1,9 @@
-import glooey, pyglet, os
+import glooey, pyglet, os, json
 from Widgets.WidgetPrimitives import *
 import Widgets.globals as Globals
 import PIL.Image as Image
+
+DOCUMENTS_PATH = os.path.expandvars("C:\\Users\\%username%\\Documents\\Smash Scoreboard\\")
 
 def dialogOnClose():
   Globals.dialog.has_exit = True
@@ -66,6 +68,41 @@ def checkNameAvailability(name):
     except AttributeError:
       pass
   return name
+
+def writeJSONFile():
+  output = []
+  grid = Globals._important_vars['grid']
+  for child in grid._Widget__yield_all_children():
+    if isinstance(child, glooey.Stack):
+      try:
+        child.x
+        child.y
+        if isinstance(child, CharacterSelect):
+          child_type = "CharSelect"
+        elif isinstance(child, PlayerNameInput):
+          child_type = "PlayerName"
+        elif isinstance(child, ScoreInputText):
+          child_type = "StockText"
+        else:
+          child_type = "EmptySlot"
+
+        try:
+          output.append({
+            'x': child.x,
+            'y': child.y,
+            'type': child_type,
+            'name': child.name
+          })
+        except AttributeError:
+          output.append({
+            'x': child.x,
+            'y': child.y,
+            'type': child_type
+          })
+      except AttributeError:
+        pass
+  file = open(DOCUMENTS_PATH + "autoload.json", 'w')
+  json.dump(output, file)
 
 #####################################
 # START EXPLICIT WIDGET DEFINITIONS #
@@ -383,14 +420,18 @@ class StockInputTextButton(BaseSelectButton):
 ############### BEGIN SELECTWIDGET WIDGETS #################
 
 class CharacterSelect(glooey.Stack):
-  def __init__(self, position):
+  def __init__(self, position, name=None):
     super().__init__()
 
     self.x = position[0]
     self.y = position[1]
     self.output_filename = None
-    self.name = checkNameAvailability("CharacterInput")
-    self.name_label = Text(self.name)
+    if name != None:
+      self.name = checkNameAvailability(name)
+      self.name_label = Text(self.name)
+    else:
+      self.name = checkNameAvailability("CharacterInput")
+      self.name_label = Text(self.name)
 
     self.add_back(Slot())
 
@@ -568,13 +609,17 @@ class CharacterSelect(glooey.Stack):
         Globals.dialog = None
 
 class ScoreInputText(glooey.Stack):
-  def __init__(self, position):
+  def __init__(self, position, name=None):
     super().__init__()
 
     self.x = position[0]
     self.y = position[1]
-    self.name = checkNameAvailability("Score")
-    self.name_label = Text(self.name)
+    if name != None:
+      self.name = checkNameAvailability(name)
+      self.name_label = Text(self.name)
+    else:
+      self.name = checkNameAvailability("Score")
+      self.name_label = Text(self.name)
 
     self.add_back(Slot())
 
@@ -637,13 +682,17 @@ class ScoreInputText(glooey.Stack):
         Globals.dialog = None
 
 class PlayerNameInput(glooey.Stack):
-  def __init__(self, position):
+  def __init__(self, position, name=None):
     super().__init__()
 
     self.x = position[0]
     self.y = position[1]
-    self.name = checkNameAvailability("Name")
-    self.name_label = Text(self.name)
+    if name != None:
+      self.name = checkNameAvailability(name)
+      self.name_label = Text(self.name)
+    else:
+      self.name = checkNameAvailability("Names")
+      self.name_label = Text(self.name)
 
     self.add_back(Slot())
 

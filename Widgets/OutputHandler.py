@@ -10,8 +10,6 @@ import pyglet, glooey, os, shutil
 #   - tuple[2]: The data, whether it be text, a filename, or perhaps in the
 #     future, raw image data.
 
-DOCUMENTS_PATH = os.path.expandvars("C:\\Users\\%username%\\Documents\\Smash Scoreboard\\")
-
 class UpdateButton(BaseButton):  
   class Foreground(Text):
     custom_text = "Update!"
@@ -62,3 +60,12 @@ class UpdateButton(BaseButton):
     file = open(DOCUMENTS_PATH + "Output\\" + update_info[1] + ".txt", "w", encoding="UTF-8")
     file.write(update_info[2])
     file.close()
+
+class SaveLayoutButton(BaseButton):
+  class Foreground(Text):
+    custom_text = "Set as Default Layout"
+    custom_font_size = 20
+    custom_horz_padding = 30
+
+  def on_click(self, w):
+    writeJSONFile()

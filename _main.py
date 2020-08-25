@@ -1,8 +1,28 @@
-import pyglet, glooey
+import pyglet, glooey, json
 import Widgets
 from Widgets.WidgetPrimitives import *
 from Widgets.globals import _important_vars
 import Widgets.OutputHandler as Out
+
+def parseAutoloadJSON():
+  file = open(Widgets.DOCUMENTS_PATH + "autoload.json", 'r')
+  jsonDump = json.load(file)
+
+  global grid
+  for object in jsonDump:
+    position = (object['x'], object['y'])
+    object_type = object['type']
+    if object_type == 'CharSelect':
+      grid[position[1], position[0]] = Widgets.CharacterSelect(position, name=object['name'])
+    elif object_type == 'PlayerName':
+      grid[position[1], position[0]] = Widgets.PlayerNameInput(position, name=object['name'])
+    elif object_type == 'StockText':
+      grid[position[1], position[0]] = Widgets.ScoreInputText(position, name=object['name'])
+    else:
+      grid[position[1], position[0]] = Widgets.EmptySlot(position)
+
+
+      
 
 gui_batch = pyglet.graphics.Batch()
 
@@ -13,10 +33,22 @@ gui = glooey.Gui(window, batch=gui_batch)
 
 grid = Grid(4, 3)
 grid.set_row_height(3, 20)
-for y in range(3):
-  for x in range(3):
-    grid[y, x] = Widgets.EmptySlot((x, y))
+
+_important_vars.update({
+  "window": window,
+  "gui": gui,
+  "gui_batch": gui_batch,
+  'grid': grid
+})
+
+try:
+  parseAutoloadJSON()
+except FileNotFoundError:
+  for y in range(3):
+    for x in range(3):
+      grid[y, x] = Widgets.EmptySlot((x, y))
 grid[3, 1] = Out.UpdateButton()
+grid[3, 0] = Out.SaveLayoutButton()
 
 stack = glooey.Stack()
 stack.add_back(WindowBackground())
@@ -28,12 +60,5 @@ gui.add(stack)
 def on_draw():
   window.clear()
   gui_batch.draw()
-
-_important_vars.update({
-  "window": window,
-  "gui": gui,
-  "gui_batch": gui_batch,
-  "grid": grid
-})
 
 pyglet.app.run()
