@@ -296,8 +296,7 @@ class BaseSelectButton(BaseButton):
     self.description = "No Description"
 
   class Background(ButtonBaseBackground):
-    #custom_center = pyglet.resource.texture("Widgets/Textures/SelectWidgetDialog/TextInput.png")
-    custom_center = pyglet.resource.texture("ICS_Test.png")
+    custom_center = pyglet.resource.texture("Widgets/Textures/SelectWidgetDialog/TextInput.png")
   
   class Over(ButtonBaseBackground):
     custom_center = pyglet.resource.texture("Widgets/Textures/SelectWidgetDialog/TextInputHover.png")
