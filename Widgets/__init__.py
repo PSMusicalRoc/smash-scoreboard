@@ -467,10 +467,8 @@ class CharacterSelect(glooey.Stack):
       path = "C:\\Users\\%username%\\Documents\\Smash Scoreboard\\ImgCache\\Ultimate Full Art\\" + character_name + "\\"
       expanded_path = os.path.expandvars(path)
       open(expanded_path + character_name + "_01.png")
-      print("True")
       return True
     except FileNotFoundError:
-      print("False")
       return False
 
   def changeCharacter(self, character_name):
