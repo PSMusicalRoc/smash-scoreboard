@@ -10,7 +10,11 @@ def dialogOnClose():
   Globals.dialog = None
 
 def importCharacterButtonImages(character_name):
-  size = 128, 128
+  if Globals.SIZE_MODE == "1920x1080":
+    size = 128, 128
+  else:
+    size = 64, 64
+
   directory = "C:\\Users\\%username%\\Documents\\Smash Scoreboard\\ImgCache\\Ultimate Full Art\\" + character_name + "\\"
   expanded_path = os.path.expandvars(directory)
   
@@ -25,6 +29,7 @@ def importCharacterButtonImages(character_name):
         raw_image = image.tobytes()
         pyglet_image = pyglet.image.ImageData(image.width, image.height, 'RGBA', raw_image, pitch=-image.width * 4)
         character_button = CharacterSelectButton(expanded_path + character_name + "_0" + str(i) + ".png", pyglet_image)
+        character_button.set_size_hint(size[0], size[1])
         list.append(character_button)
       elif i >= 10:
         image = Image.open(expanded_path + character_name + "_" + str(i) + ".png")

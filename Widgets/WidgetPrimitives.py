@@ -29,7 +29,6 @@ class CharacterSelectButton(BaseButton):
   def __init__(self, filename, image):
     super().__init__()
     self.image_filename = filename
-    self.size_hint = (128, 128)
     
     self._foreground.set_image(image)
 
@@ -64,7 +63,6 @@ class IntEditableLabel(glooey.Form):
     custom_selection_background_color = "#3390ff"
     custom_padding = 2
     custom_size_hint = (160, 20)
-    custom_text_alignment = 'center'
 
     def on_insert_text(self, start, text):
       no_int_text = ""
