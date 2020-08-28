@@ -222,7 +222,11 @@ class TextInput(glooey.Form):
     custom_selection_color = "#ffffff"
     custom_selection_background_color = "#3390ff"
     custom_padding = 2
-    custom_size_hint = (200, 20)
+    if Globals.SIZE_MODE == "1920x1080":
+      custom_size_hint = (200, 20)
+    else:
+      custom_size_hint = (100, 20)
+    custom_text_alignment = 'center'
 
   class Base(glooey.Background):
     custom_center = pyglet.resource.texture('Widgets/Textures/TextInput/TextInputCenter.png')
