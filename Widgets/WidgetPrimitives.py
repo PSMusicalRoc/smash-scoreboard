@@ -62,7 +62,11 @@ class IntEditableLabel(glooey.Form):
     custom_selection_color = "#ffffff"
     custom_selection_background_color = "#3390ff"
     custom_padding = 2
-    custom_size_hint = (160, 20)
+    if Globals.SIZE_MODE == "1920x1080":
+      custom_size_hint = (160, 20)
+    else:
+      custom_size_hint = (80, 20)
+    custom_text_alignment = 'center'
 
     def on_insert_text(self, start, text):
       no_int_text = ""
